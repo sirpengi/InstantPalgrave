@@ -1,0 +1,19 @@
+{
+  "name": "instantpalgrave",
+  "version": "1.0.0",
+  "description": "The open-source digital assistant",
+  "main": "palgrave.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaiete/InstantPalgrave.git"
+  },
+  "author": "kaiete",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaiete/InstantPalgrave/issues"
+  },
+  "homepage": "https://github.com/kaiete/InstantPalgrave#readme"
+}
