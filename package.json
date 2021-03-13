@@ -1,6 +1,6 @@
 {
   "name": "palgrave",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The open-source digital assistant",
   "scripts": {
     "start": "python3 palgrave.py",
