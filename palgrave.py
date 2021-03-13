@@ -1,3 +1,5 @@
+import json
+
 import pyaudio
 import vosk
 
@@ -6,23 +8,44 @@ AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
 
 
-def main():
+class PalgraveImplementation():
+	def __init__(self):
+		pass
+
+	def callback_receive_text(self, text):
+		print("I heard: {}".format(text))
+
+
+def get_recognizer():
 	vosk_model = vosk.Model(MODEL)
 	rec = vosk.KaldiRecognizer(vosk_model, AUDIO_BITRATE)
+	return rec
+
+
+def get_audio_stream():
 	audio = pyaudio.PyAudio()
 	stream = audio.open(
 		format = pyaudio.paInt16,
-		channels = 2,
+		channels = 1,
 		rate = AUDIO_BITRATE,
 		input = True,
 		frames_per_buffer = AUDIO_BUFFER,
 	)
+	return stream
+	
+
+def main():
+	recognizer = get_recognizer()
+	stream = get_audio_stream()
+	robot = PalgraveImplementation()
 	while 1:
 		data = stream.read(AUDIO_BUFFER)
-		if rec.AcceptWaveform(data):
-			print(rec.Result())
-		else:
-			print(rec.PartialResult())
+		if recognizer.AcceptWaveform(data):
+			raw_result = recognizer.Result()
+			result = json.loads(raw_result)
+			text = result.get("text")
+			if text:
+				robot.callback_receive_text(text)
 
 
 if __name__ == "__main__":
