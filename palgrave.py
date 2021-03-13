@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pyaudio
 import vosk
@@ -17,6 +18,8 @@ class PalgraveImplementation():
 
 
 def get_recognizer():
+	if not Path(MODEL).exists():
+		raise Exception("Model {} doesn't exist, maybe download it from: https://alphacephei.com/vosk/models and unzip it here".format(MODEL))
 	vosk_model = vosk.Model(MODEL)
 	rec = vosk.KaldiRecognizer(vosk_model, AUDIO_BITRATE)
 	return rec
