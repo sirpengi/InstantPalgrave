@@ -160,8 +160,6 @@ class PalgraveImplementation(BaseRobot):
 			webbrowser.open(input("URL: "))
 		if "spotify" in text and "pause" in text:
 			with SpotifyLocal() as s:
-				pass
-			with SpotifyLocal() as s:
 				s.pause()
 			self.respond("Paused")
 
