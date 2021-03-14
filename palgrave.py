@@ -6,6 +6,7 @@ import time
 import requests
 import webbrowser
 import urllib.parse
+from spotify_local import SpotifyLocal
 
 import pyaudio
 import sounddevice
@@ -157,6 +158,12 @@ class PalgraveImplementation(BaseRobot):
 		if "open" in text and "website" in text:
 			self.respond("Please type a URL")
 			webbrowser.open(input("URL: "))
+		if "spotify" in text and "pause" in text:
+			with SpotifyLocal() as s:
+				pass
+			with SpotifyLocal() as s:
+				s.pause()
+			self.respond("Paused")
 
 
 def get_recognizer():
