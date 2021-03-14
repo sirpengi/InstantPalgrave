@@ -8,11 +8,14 @@ import webbrowser
 import urllib.parse
 
 import pyaudio
+import sounddevice
 import vosk
 
 MODEL = "vosk-model-small-en-us-0.15"
 AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
+
+ENABLE_VOSK_DEBUG = False
 
 
 class SpeakOutput():
@@ -159,6 +162,8 @@ class PalgraveImplementation(BaseRobot):
 def get_recognizer():
 	if not Path(MODEL).exists():
 		raise Exception("Model {} doesn't exist, maybe download it from: https://alphacephei.com/vosk/models and unzip it here".format(MODEL))
+	if not ENABLE_VOSK_DEBUG:
+		vosk.SetLogLevel(-1)
 	vosk_model = vosk.Model(MODEL)
 	rec = vosk.KaldiRecognizer(vosk_model, AUDIO_BITRATE)
 	return rec
