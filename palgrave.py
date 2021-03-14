@@ -138,6 +138,9 @@ class PalgraveImplementation(BaseRobot):
 			else:
 				self.respond("Sorry, an error occurred at line 132 approximately. I will send you to the link to report a bug.")
 				webbrowser.open("https://github.com/kaiete/InstantPalgrave/issues")
+		if "open" in text and "website" in text:
+			self.respond("Please type a URL")
+			webbrowser.open(input("URL: "))
 
 
 def get_recognizer():
