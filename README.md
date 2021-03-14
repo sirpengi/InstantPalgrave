@@ -13,13 +13,13 @@ pip install -r requirements.txt
 and then:
 
 ```console
-python palgrave.py
+python3 palgrave.py
 ```
 
 There are other bot modes you can run by specifying the bot implementation:
 
 ```console
-python palgrave.py backwards
+python3 palgrave.py backwards
 ```
 
 Supported implementations are `palgrave` (default, if you left blank), `echo`, `reverse`, and `backwards`.
