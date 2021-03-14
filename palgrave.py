@@ -104,13 +104,21 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Goodbye!")
 			time.sleep(2)
 			quit()
-		if "get" in text and "hyper text" in text or "hypertext" in text:
+		if "get" in text and "hypertext" in text:
 			self.respond("Please type a URL")
 			getURL = input("URL: ")
 			getresponse = requests.get(getURL)
 			print("Response: ")
 			print(getresponse)
 			print(getresponse.text)
+			self.respond("Do you want to open this url in your web browser? Type y or n")
+			openInWebbrowser = input("Open in web browser? y/n")
+			if openInWebbrowser = "y":
+				webbrowser.open(getURL)
+			elif openInWebbrowser = "n":
+				self.respond("OK")
+			else:
+				self.respond("I didn't receive y or n, so I didn't open the browser")
 		if "thanks" in text or "thank you" in text:
 			self.respond("No problem")
 		if "search" in text:
@@ -162,7 +170,7 @@ def main(bot_mode):
 			result = json.loads(raw_result)
 			text = result.get("text")
 			if text:
-				print("DEBUG MIC IN:'{}'".format(text))
+				print("I heard: {}".format(text))
 				stream.stop_stream()
 				robot.callback_receive_text(text)
 				stream.start_stream()
