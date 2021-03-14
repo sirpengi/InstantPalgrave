@@ -3,6 +3,7 @@ from pathlib import Path
 import random
 import sys
 import time
+import requests
 
 import pyaudio
 import vosk
@@ -101,6 +102,12 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Goodbye!")
 			time.sleep(2)
 			quit()
+		if "get" in text and "hyper text" in text or "hypertext" in text:
+			self.respond("Please type a URL")
+			getURL = input("URL: ")
+			getresponse = requests.get(getURL)
+			print("Response: ")
+			print(getresponse)
 
 
 def get_recognizer():
