@@ -16,6 +16,14 @@ and then:
 python palgrave.py
 ```
 
+There are other bot modes you can run by specifying the bot implementation:
+
+```console
+python palgrave.py backwards
+```
+
+Supported implementations are `palgrave` (default, if you left blank), `echo`, `reverse`, and `backwards`.
+
 
 ## Trouble with pyaudio
 
