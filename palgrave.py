@@ -4,6 +4,8 @@ import random
 import sys
 import time
 import requests
+import webbrowser
+import urllib.parse
 
 import pyaudio
 import vosk
@@ -111,6 +113,11 @@ class PalgraveImplementation(BaseRobot):
 			print(getresponse.text)
 		if "thanks" in text or "thank you" in text:
 			self.respond("No problem")
+		if "search" in text:
+			self.respond("Please type a search query.")
+			searchterm = input("Search term: ")
+			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(searchterm))
+			self.respond("Opening web browser")
 
 
 def get_recognizer():
