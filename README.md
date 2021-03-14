@@ -10,7 +10,7 @@ Create a python3(.8??) vitualenv and then:
 pip install -r requirements.txt
 ```
 
-Grab the english model file from https://alphacephei.com/vosk/models and unzip it here
+Grab the english model file from http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip and unzip it here
 
 and then run:
 
