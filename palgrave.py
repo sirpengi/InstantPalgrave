@@ -54,6 +54,10 @@ class PrintOutput():
 class BaseRobot():
 	def __init__(self, output):
 		self.output = output
+		self.setup()
+
+	def setup(self):
+		pass
 
 	def respond(self, text):
 		self.output.callback_output_text(text)
@@ -76,7 +80,7 @@ class ReverseImplementation(BaseRobot):
 		words = text.split()
 		reversed_words = " ".join(reversed(words))
 		self.respond(reversed_words)
-		
+
 
 class BackwardsImplementation(BaseRobot):
 	"""
@@ -91,7 +95,17 @@ class PalgraveImplementation(BaseRobot):
 	"""
 	The best bot
 	"""
+
+	def setup(self):
+		self.mode = None
+
 	def callback_receive_text(self, text):
+		if self.mode == "awaitingSearch":
+			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(text))
+			self.respond("Opening web browser")
+			self.mode = None
+			return
+
 		if "palgrave" in text:
 			self.respond("Hello!")
 		if "i" in text and "bored" in text and not "not" in text:
@@ -122,10 +136,9 @@ class PalgraveImplementation(BaseRobot):
 		if "thanks" in text or "thank you" in text:
 			self.respond("No problem")
 		if "search" in text:
-			self.respond("Please type a search query.")
-			searchterm = input("Search term: ")
-			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(searchterm))
-			self.respond("Opening web browser")
+			self.respond("What would you like to search?")
+			self.mode = "awaitingSearch"
+			return
 		if "what" in text and "you" in text and "do" in text:
 			self.respond("I can do many things.")
 			x = random.random()
