@@ -3,3 +3,4 @@ vosk==0.3.21
 pyttsx3==2.90
 requests==2.25.1
 sounddevice==0.4.1
+spotify-local-control==0.2.3
