@@ -23,7 +23,7 @@ class SpeakOutput():
 		except ImportError:
 			raise Exception("Please pip install pyttsx3")
 		engine = pyttsx3.init()
-		engine.setProperty("rate", 125) # words per minute
+		engine.setProperty("rate", 130) # words per minute
 		engine.setProperty("volume", 1.0)
 		#voices = engine.getProperty("voices")
 		#for i, voice in enumerate(voices):
