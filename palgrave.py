@@ -109,6 +109,8 @@ class PalgraveImplementation(BaseRobot):
 			print("Response: ")
 			print(getresponse)
 			print(getresponse.text)
+		if "thanks" in text or "thank you" in text:
+			self.respond("No problem")
 
 
 def get_recognizer():
