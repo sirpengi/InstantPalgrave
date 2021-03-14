@@ -113,9 +113,9 @@ class PalgraveImplementation(BaseRobot):
 			print(getresponse.text)
 			self.respond("Do you want to open this url in your web browser? Type y or n")
 			openInWebbrowser = input("Open in web browser? y/n")
-			if openInWebbrowser = "y":
+			if openInWebbrowser == "y":
 				webbrowser.open(getURL)
-			elif openInWebbrowser = "n":
+			elif openInWebbrowser == "n":
 				self.respond("OK")
 			else:
 				self.respond("I didn't receive y or n, so I didn't open the browser")
