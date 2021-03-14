@@ -146,7 +146,9 @@ def main(bot_mode):
 			text = result.get("text")
 			if text:
 				print("DEBUG MIC IN:'{}'".format(text))
+				stream.stop_stream()
 				robot.callback_receive_text(text)
+				stream.start_stream()
 
 
 if __name__ == "__main__":
