@@ -112,7 +112,7 @@ class PalgraveImplementation(BaseRobot):
 			print(getresponse)
 			print(getresponse.text)
 			self.respond("Do you want to open this url in your web browser? Type y or n")
-			openInWebbrowser = input("Open in web browser? y/n ")
+			openInWebbrowser = input("Open in web browser? y/n")
 			if openInWebbrowser == "y":
 				webbrowser.open(getURL)
 			elif openInWebbrowser == "n":
@@ -138,10 +138,6 @@ class PalgraveImplementation(BaseRobot):
 			else:
 				self.respond("Sorry, an error occurred at line 132 approximately. I will send you to the link to report a bug.")
 				webbrowser.open("https://github.com/kaiete/InstantPalgrave/issues")
-		if "website" in text and "open" in text:
-			self.respond("Type a URL to open")
-			url = input("URL: ")
-			webbrowser.open(url)
 
 
 def get_recognizer():
