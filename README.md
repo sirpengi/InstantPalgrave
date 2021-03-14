@@ -4,7 +4,7 @@ Instant Palgrave, the open-source digital assistant
 
 ## Setup dev
 
-Create a python3(.8??) vitualenv and then:
+Create a python3(.8??) virtualenv and then:
 
 ```console
 pip install -r requirements.txt
