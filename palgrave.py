@@ -15,6 +15,8 @@ class PalgraveImplementation():
 
 	def callback_receive_text(self, text):
 		print("I heard: {}".format(text))
+		if "palgrave" in text:
+			print("Hello!")
 
 
 def get_recognizer():
