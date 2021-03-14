@@ -126,6 +126,18 @@ class PalgraveImplementation(BaseRobot):
 			searchterm = input("Search term: ")
 			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(searchterm))
 			self.respond("Opening web browser")
+		if "what" in text and "you" in text and "do" in text:
+			self.respond("I can do many things.")
+			x = random.random()
+			if x < 0.5:
+				time.sleep(0.6)
+				self.respond("You can say, hypertext get or search")
+			elif x > 0.5:
+				time.sleep(0.6)
+				self.respond("You can say, thanks or i'm bored")
+			else:
+				self.respond("Sorry, an error occurred at line 132 approximately. I will send you to the link to report a bug.")
+				webbrowser.open("https://github.com/kaiete/InstantPalgrave/issues")
 
 
 def get_recognizer():
