@@ -1,3 +1,4 @@
 PyAudio==0.2.11
 vosk==0.3.21
 pyttsx3==2.90
+requests==2.25.1
