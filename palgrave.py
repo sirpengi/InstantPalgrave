@@ -131,7 +131,7 @@ class PalgraveImplementation(BaseRobot):
 			x = random.random()
 			if x < 0.5:
 				time.sleep(0.6)
-				self.respond("You can say, hyper text get or search")
+				self.respond("You can say, hyper teckst get or search")
 			elif x > 0.5:
 				time.sleep(0.6)
 				self.respond("You can say, thanks or i'm bored")
