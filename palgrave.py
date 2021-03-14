@@ -108,6 +108,7 @@ class PalgraveImplementation(BaseRobot):
 			getresponse = requests.get(getURL)
 			print("Response: ")
 			print(getresponse)
+			print(getresponse.text)
 
 
 def get_recognizer():
