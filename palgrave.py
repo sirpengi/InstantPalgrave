@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import random
+import time
 
 import pyaudio
 import vosk
@@ -18,12 +19,16 @@ class PalgraveImplementation():
 		print("I heard: {}".format(text))
 		if "palgrave" in text:
 			print("Hello!")
-		if "i" in text and "bored" in text:
+		if "i" in text and "bored" in text and not "not" in text:
 			randomnumber = random.random()
 			if randomnumber < 0.5:
 				print("Do a jigsaw")
 			else:
 				print("Listen to music")
+		if "exit" in text or "quit" in text and not "don't" in text and not "do not" in text:
+			print("Goodbye!")
+			time.sleep(2)
+			quit()
 
 
 def get_recognizer():
