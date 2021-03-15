@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>InstantPalgrave | Auth with Google</title>
+    <meta name="google-signin-client_id" content="111584389093-f7tv38u0b2ff4bahrb27mlq545404p6c.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        alert("Hello, " + profile.getName())
+      }
+    </script>
+  </body>
+</html>
