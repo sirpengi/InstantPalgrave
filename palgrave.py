@@ -1,3 +1,4 @@
+import configparser
 import json
 from pathlib import Path
 import random
@@ -6,9 +7,9 @@ import time
 import requests
 import webbrowser
 import urllib.parse
-from spotify_local import SpotifyLocal
 
 import pyaudio
+import spotipy
 import sounddevice
 import vosk
 
@@ -56,7 +57,8 @@ class PrintOutput():
 
 
 class BaseRobot():
-	def __init__(self, output):
+	def __init__(self, config, output):
+		self.config = config
 		self.output = output
 		self.setup()
 
@@ -102,6 +104,57 @@ class PalgraveImplementation(BaseRobot):
 
 	def setup(self):
 		self.mode = None
+		self.spotify_enabled = False
+		self.spotify_token = None
+
+	def enable_spotify(self):
+		if self.spotify_enabled:
+			self.respond("Already enabled")
+			return
+		scopes = [
+			"user-read-playback-state",
+			"user-modify-playback-state",
+			"user-read-currently-playing",
+			"user-library-read",
+		]
+		token = spotipy.util.prompt_for_user_token(
+			username = self.config["SPOTIFY_USERNAME"],
+			client_id = self.config["SPOTIFY_CLIENT_ID"],
+			client_secret = self.config["SPOTIFY_CLIENT_SECRET"],
+			redirect_uri = self.config["SPOTIFY_REDIRECT_URI"],
+			scope = " ".join(scopes),
+		)
+		self.spotify_token = token
+		self.spotify_enabled = True
+		self.respond("Music enabled")
+
+	def get_spotify_currently_playing(self):
+		if not self.spotify_enabled:
+			self.respond("Music mode is not enabled")
+			return
+		spotify = spotipy.Spotify(auth=self.spotify_token)
+		track = spotify.current_user_playing_track()
+		# print(json.dumps(track, sory_keys=True, indent=4))
+		artist = track["item"]["artists"][0]["name"]
+		trackname = track["item"]["name"]
+		self.respond("Currently playing {} by {}".format(
+			trackname,
+			artist,
+		))
+
+	def unpause_spotify(self):
+		if not self.spotify_enabled:
+			self.respond("Music mode is not enabled")
+			return
+		spotify = spotipy.Spotify(auth=self.spotify_token)
+		spotify.start_playback()
+		
+	def pause_spotify(self):
+		if not self.spotify_enabled:
+			self.respond("Music mode is not enabled")
+			return
+		spotify = spotipy.Spotify(auth=self.spotify_token)
+		spotify.pause_playback()
 
 	def callback_receive_text(self, text):
 		if self.mode == "awaitingSearch":
@@ -118,6 +171,14 @@ class PalgraveImplementation(BaseRobot):
 
 		if "palgrave" in text:
 			self.respond("Hello!")
+		if "enable" in text and "music" in text:
+			self.enable_spotify()
+		if text == "what is playing":
+			self.get_spotify_currently_playing()
+		if text == "pause music":
+			self.pause_spotify()
+		if text == "continue music":
+			self.unpause_spotify()
 		if "i" in text and "bored" in text and not "not" in text:
 			randomnumber = random.random()
 			if randomnumber < 0.5:
@@ -174,12 +235,12 @@ class PalgraveImplementation(BaseRobot):
 			return
 
 
-def get_recognizer():
-	if not Path(MODEL).exists():
+def get_recognizer(model):
+	if not Path(model).exists():
 		raise Exception("Model {} doesn't exist, maybe download it from: https://alphacephei.com/vosk/models and unzip it here".format(MODEL))
 	if not ENABLE_VOSK_DEBUG:
 		vosk.SetLogLevel(-1)
-	vosk_model = vosk.Model(MODEL)
+	vosk_model = vosk.Model(model)
 	rec = vosk.KaldiRecognizer(vosk_model, AUDIO_BITRATE)
 	return rec
 
@@ -197,18 +258,21 @@ def get_audio_stream():
 
 
 def main(bot_mode):
-	recognizer = get_recognizer()
+	cp = configparser.ConfigParser()
+	cp.read("settings.ini")
+	config = cp["palgrave"]
+	recognizer = get_recognizer(config["VOSK_MODEL"])
 	stream = get_audio_stream()
 	#output = PrintOutput()
 	output = SpeakOutput()
 	if bot_mode == "palgrave":
-		robot = PalgraveImplementation(output=output)
+		robot = PalgraveImplementation(config=config, output=output)
 	elif bot_mode == "echo":
-		robot = EchoImplementation(output=output)
+		robot = EchoImplementation(config=config, output=output)
 	elif bot_mode == "reverse":
-		robot = ReverseImplementation(output=output)
+		robot = ReverseImplementation(config=config, output=output)
 	elif bot_mode == "backwards":
-		robot = BackwardsImplementation(output=output)
+		robot = BackwardsImplementation(config=config, output=output)
 	else:
 		raise Exception("Unknown bot mode: {}".format(bot_mode))
 	while 1:
