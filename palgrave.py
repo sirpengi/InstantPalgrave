@@ -109,6 +109,12 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Opening web browser")
 			self.mode = None
 			return
+		if self.mode == "awaitingNote":
+			notes = open("palgravenotes","a")
+			notes.write(text)
+			self.respond("Note saved successfully!")
+			self.mode = None
+			return
 
 		if "palgrave" in text:
 			self.respond("Hello!")
@@ -162,6 +168,10 @@ class PalgraveImplementation(BaseRobot):
 			with SpotifyLocal() as s:
 				s.pause()
 			self.respond("Paused")
+		if "note" in text and "save" in text:
+			self.respond("Please say a note")
+			self.mode = "awaitingNote"
+			return
 
 
 def get_recognizer():
