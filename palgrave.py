@@ -8,6 +8,7 @@ import requests
 import webbrowser
 import urllib.parse
 import datetime
+from playsound import playsound
 
 import pyaudio
 import spotipy
@@ -170,6 +171,10 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Note saved successfully!")
 			self.mode = None
 			return
+		if self.mode == "awaitingAlarmtime":
+			alarm = open("palgravealarm","w")
+			alarm.write(text)
+			self.respond("Alarm set")
 
 		if "palgrave" in text:
 			self.respond("Hello!")
@@ -239,6 +244,8 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("The time is " + str(datetime.datetime.now().strftime("%H %M")))
 		if "note" in text and "get" in text or "note" in text and "what" in text:
 			self.respond("Your note is: . " + open("palgravenotes","r").read())
+		if "google" in text and "auth" in text:
+			webbrowser.open("https://kaiete.github.io/InstantPalgrave/authbygoogle/")
 
 
 def get_recognizer(model):
