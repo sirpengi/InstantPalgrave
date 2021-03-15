@@ -7,6 +7,7 @@ import time
 import requests
 import webbrowser
 import urllib.parse
+import datetime
 
 import pyaudio
 import spotipy
@@ -232,6 +233,12 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Please say a note")
 			self.mode = "awaitingNote"
 			return
+		if "date" in text and "what" in text:
+			self.respond("The date today is " + str(datetime.date.today()))
+		if "time" in text and "what" in text:
+			self.respond("The time is " + str(datetime.datetime.now().strftime("%H %M")))
+		if "note" in text and "get" in text or "note" in text and "what" in text:
+			self.respond("Your note is: . " + open("palgravenotes","r").read())
 
 
 def get_recognizer(model):
