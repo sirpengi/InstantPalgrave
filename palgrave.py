@@ -155,6 +155,7 @@ class PalgraveImplementation(BaseRobot):
 			return
 		spotify = spotipy.Spotify(auth=self.spotify_token)
 		spotify.pause_playback()
+		self.respond("Paused")
 
 	def callback_receive_text(self, text):
 		if self.mode == "awaitingSearch":
@@ -176,6 +177,8 @@ class PalgraveImplementation(BaseRobot):
 		if text == "what is playing":
 			self.get_spotify_currently_playing()
 		if text == "pause music":
+			self.pause_spotify()
+		if "spotify" in text and "pause" in text:
 			self.pause_spotify()
 		if text == "continue music":
 			self.unpause_spotify()
@@ -225,10 +228,6 @@ class PalgraveImplementation(BaseRobot):
 		if "open" in text and "website" in text:
 			self.respond("Please type a URL")
 			webbrowser.open(input("URL: "))
-		if "spotify" in text and "pause" in text:
-			with SpotifyLocal() as s:
-				s.pause()
-			self.respond("Paused")
 		if "note" in text and "save" in text:
 			self.respond("Please say a note")
 			self.mode = "awaitingNote"
