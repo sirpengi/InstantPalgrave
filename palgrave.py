@@ -108,6 +108,7 @@ class PalgraveImplementation(BaseRobot):
 		self.mode = None
 		self.spotify_enabled = False
 		self.spotify_token = None
+		self.last = None
 
 	def enable_spotify(self):
 		if self.spotify_enabled:
@@ -171,10 +172,6 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Note saved successfully!")
 			self.mode = None
 			return
-		if self.mode == "awaitingAlarmtime":
-			alarm = open("palgravealarm","w")
-			alarm.write(text)
-			self.respond("Alarm set")
 
 		if "palgrave" in text:
 			self.respond("Hello!")
@@ -182,7 +179,7 @@ class PalgraveImplementation(BaseRobot):
 			self.enable_spotify()
 		if text == "what is playing":
 			self.get_spotify_currently_playing()
-		if text == "pause music":
+		if text == "stop music":
 			self.pause_spotify()
 		if "spotify" in text and "pause" in text:
 			self.pause_spotify()
@@ -246,6 +243,12 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Your note is: . " + open("palgravenotes","r").read())
 		if "google" in text and "auth" in text:
 			webbrowser.open("https://kaiete.github.io/InstantPalgrave/authbygoogle/")
+		if "what" in text and "i" in text and "said" in text or "what" in text and "i" in text and "say" in text:
+			if not self.last == None:
+				self.respond("You just said" + self.last)
+			else:
+				self.respond("I don't know what you just said, or this is the beginning of our conversation.")
+		self.last = text
 
 
 def get_recognizer(model):
