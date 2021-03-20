@@ -28,3 +28,6 @@ Supported implementations are `palgrave` (default, if you left blank), `echo`, `
 ## Trouble with pyaudio
 
 In fedora I had to `dnf install portaudio-devel`. Ubuntu users might need `portaudio19-dev`
+
+# Important!
+Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier
