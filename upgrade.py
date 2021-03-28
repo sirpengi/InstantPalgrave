@@ -1,6 +1,6 @@
 from subprocess import call
-from time import sleep
+from time import sleep as wait
 call("upgrade.sh")
 print("palgrave: update attempt finished")
-sleep(3)
+wait(3)
 quit()

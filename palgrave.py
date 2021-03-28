@@ -172,6 +172,21 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Note saved successfully!")
 			self.mode = None
 			return
+		if self.mode == "timerConfirmation":
+			if "yes" in text or "sure" in text:
+				self.respond("OK, how long should the timer be for in seconds? say anything, then Type your response")
+				self.mode = "setTimer"
+				return
+			else:
+				self.respond("OK, I've cancelled setting the timer.")
+				self.mode = None
+				return
+		if self.mode == "setTimer":
+			time.sleep(int(input("Timer length: ")))
+			playsound("alarm.wav")
+			self.respond("Time is up!")
+			self.mode = None
+			return
 
 		if "palgrave" in text:
 			self.respond("Hello!")
@@ -248,6 +263,12 @@ class PalgraveImplementation(BaseRobot):
 				self.respond("You just said" + self.last)
 			else:
 				self.respond("I don't know what you just said, or this is the beginning of our conversation.")
+		if "set" in text and "timer" in text:
+			self.respond("Are you sure? You can't talk to me during the timer.")
+			self.mode = "timerConfirmation"
+			return
+		
+				
 		self.last = text
 
 
@@ -298,7 +319,8 @@ def main(bot_mode):
 			result = json.loads(raw_result)
 			text = result.get("text")
 			if text:
-				print("I heard: {}".format(text))
+				if not text == "huh":
+					print("I heard: {}".format(text))
 				stream.stop_stream()
 				robot.callback_receive_text(text)
 				stream.start_stream()
