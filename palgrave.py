@@ -14,7 +14,11 @@ import pyaudio
 import spotipy
 import sounddevice
 import vosk
+import os
 
+# Make sure that palgrave command exists
+if not os.path.exists("/usr/bin/palgrave"):
+	print("\033[31m" + "palgrave: TIP: for ease of access, please\npalgrave: TIP: type in the following commands in terminal:\ncd /usr/bin && touch palgrave\nsudo *text editor here - gedit for example* palgrave\nthen type in your text editor the following:\n#!/bin/bash\npreviousdir=$(pwd)\ncd /home/*username*/InstantPalgrave\npython3 palgrave.py" + "\033[0m")
 MODEL = "vosk-model-small-en-us-0.15"
 AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
@@ -161,6 +165,7 @@ class PalgraveImplementation(BaseRobot):
 		self.respond("Paused")
 
 	def callback_receive_text(self, text):
+		text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
 		if self.mode == "awaitingSearch":
 			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(text))
 			self.respond("Opening web browser")
@@ -174,7 +179,7 @@ class PalgraveImplementation(BaseRobot):
 			return
 		if self.mode == "timerConfirmation":
 			if "yes" in text or "sure" in text:
-				self.respond("OK, how long should the timer be for in seconds? say anything, then Type your response")
+				self.respond("OK, how long should the timer be for in seconds? say anything, then type your response")
 				self.mode = "setTimer"
 				return
 			else:
@@ -187,8 +192,36 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Time is up!")
 			self.mode = None
 			return
+		if self.mode == "conversation1":
+			if "ok" in text or "good" in text or "fine" in text or "brilliant" in text or "derp" in text or "happy" in text:
+				self.respond("Good to hear you're feeling well. What have you been doing lately?")
+				self.mode = "conversation2"
+				return
+			elif "bad" in text or "not ok" in text or "terrible" in text or "sad" in text:
+				self.respond("Oh, that's not good. Hope you feel better soon, and in the meantime if there's anything I can do to help, just ask!")
+				self.mode = None
+				return
+			else:
+				self.respond("OK! What have you been doing, anything fun?")
+				self.mode = "conversation2"
+				return
+		if self.mode == "conversation2":
+			if "fun" in text or "good" in text or "nice" in text or "happy" in text or "exciting" in text:
+				self.respond("That sounds super fun! I wish I could have done that too, but I suppose that's the disadvantage of living in a computer.")
+				self.respond("Well, I'd better go and help some other people now. If there's anything I can do, just ask!")
+				self.mode = None
+				return
+			elif "boring" in text or "bad" in text or "sad" in text or "not fun" in text:
+				self.respond("Oh dear, that doesn't sound good. I hope you're happy though, because your feelings are my feelings so if you're feeling sad, I feel sad, and I don't want anyone to be sad.")
+				self.respond("If I can help or cheer you up, just ask. Bye for now!")
+				self.mode = None
+				return
+			else:
+				self.respond("Ok! anything I can do for you, just ask, I'll always be there. Bye for now!")
+				self.mode = None
+				return
 
-		if "palgrave" in text:
+		if text == "palgrave":
 			self.respond("Hello!")
 		if "enable" in text and "music" in text:
 			self.enable_spotify()
@@ -206,8 +239,8 @@ class PalgraveImplementation(BaseRobot):
 				self.respond("Do a jigsaw")
 			else:
 				self.respond("Listen to music")
-		if "exit" in text or "quit" in text and not "don't" in text and not "do not" in text:
-			self.respond("Goodbye!")
+		if "exit" in text or "quit" in text or "goodbye" in text or "bye" in text or "see you later" in text and not "don't" in text and not "do not" in text:
+			self.respond("Goodbye! See you later")
 			time.sleep(2)
 			quit()
 		if "get" in text and "hypertext" in text:
@@ -251,7 +284,7 @@ class PalgraveImplementation(BaseRobot):
 			self.mode = "awaitingNote"
 			return
 		if "date" in text and "what" in text:
-			self.respond("The date today is " + str(datetime.date.today()))
+			self.respond("The date today is " + str(datetime.date.today().strftime("%A the %d of %B, %Y")))
 		if "time" in text and "what" in text:
 			self.respond("The time is " + str(datetime.datetime.now().strftime("%H %M")))
 		if "note" in text and "get" in text or "note" in text and "what" in text:
@@ -267,7 +300,15 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Are you sure? You can't talk to me during the timer.")
 			self.mode = "timerConfirmation"
 			return
-		
+		if "hello" in text and "palgrave" in text:
+			self.respond("Hello! How are you today?")
+			self.mode = "conversation1"
+			return
+		if "roll" in text and "dice" in text and not "some" in text:
+			self.respond("The correct term is, 'to roll a die', because dice is the plural and die is the singular, but I'll do it anyway.")
+			self.respond("The outcome was " + str(random.randint(1,6)))
+		if "roll" in text and "die" in text:
+			self.respond("The outcome was " + str(random.randint(1,6)))
 				
 		self.last = text
 
@@ -320,7 +361,7 @@ def main(bot_mode):
 			text = result.get("text")
 			if text:
 				if not text == "huh":
-					print("I heard: {}".format(text))
+					text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
 				stream.stop_stream()
 				robot.callback_receive_text(text)
 				stream.start_stream()
