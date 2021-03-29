@@ -15,6 +15,7 @@ import spotipy
 import sounddevice
 import vosk
 import os
+import dateparser.search
 
 # Make sure that palgrave command exists
 if not os.path.exists("/usr/bin/palgrave"):
@@ -74,6 +75,9 @@ class BaseRobot():
 	def respond(self, text):
 		self.output.callback_output_text(text)
 
+	def callback_receive_tick(self, t):
+		pass
+
 
 class EchoImplementation(BaseRobot):
 	"""
@@ -113,6 +117,7 @@ class PalgraveImplementation(BaseRobot):
 		self.spotify_enabled = False
 		self.spotify_token = None
 		self.last = None
+		self.timers = set()
 
 	def enable_spotify(self):
 		if self.spotify_enabled:
@@ -164,6 +169,31 @@ class PalgraveImplementation(BaseRobot):
 		spotify.pause_playback()
 		self.respond("Paused")
 
+	def handle_set_timer(self, inp):
+		_, rest = inp.split("timer")
+		found_dates = dateparser.search.search_dates(rest, settings={"PREFER_DATES_FROM": "future"})
+		if not found_dates:
+			self.respond("Could not determine a date from your command")
+		else:
+			found_input, found_date = found_dates[0]
+			now = datetime.datetime.now()
+			offset = found_date - now
+			if offset < datetime.timedelta(0):
+				self.respond("Can not set a timer in the past")
+			else:
+				self.respond("Timer set for {}".format(found_input))
+				self.timers.add(found_date)
+
+	def callback_receive_tick(self, t):
+		now = datetime.datetime.now()
+		do_alarm = False
+		for timer in list(self.timers):
+			if now >= timer:
+				do_alarm = True
+				self.timers.remove(timer)
+		if do_alarm:
+			playsound("alarm.wav")
+
 	def callback_receive_text(self, text):
 		text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
 		if self.mode == "awaitingSearch":
@@ -175,21 +205,6 @@ class PalgraveImplementation(BaseRobot):
 			notes = open("palgravenotes","a")
 			notes.write(text)
 			self.respond("Note saved successfully!")
-			self.mode = None
-			return
-		if self.mode == "timerConfirmation":
-			if "yes" in text or "sure" in text:
-				self.respond("OK, how long should the timer be for in seconds? say anything, then type your response")
-				self.mode = "setTimer"
-				return
-			else:
-				self.respond("OK, I've cancelled setting the timer.")
-				self.mode = None
-				return
-		if self.mode == "setTimer":
-			time.sleep(int(input("Timer length: ")))
-			playsound("alarm.wav")
-			self.respond("Time is up!")
 			self.mode = None
 			return
 		if self.mode == "conversation1":
@@ -297,8 +312,7 @@ class PalgraveImplementation(BaseRobot):
 			else:
 				self.respond("I don't know what you just said, or this is the beginning of our conversation.")
 		if "set" in text and "timer" in text:
-			self.respond("Are you sure? You can't talk to me during the timer.")
-			self.mode = "timerConfirmation"
+			self.handle_set_timer(text)
 			return
 		if "hello" in text and "palgrave" in text:
 			self.respond("Hello! How are you today?")
@@ -354,6 +368,7 @@ def main(bot_mode):
 	else:
 		raise Exception("Unknown bot mode: {}".format(bot_mode))
 	while 1:
+		robot.callback_receive_tick(time.time())
 		data = stream.read(AUDIO_BUFFER)
 		if recognizer.AcceptWaveform(data):
 			raw_result = recognizer.Result()
