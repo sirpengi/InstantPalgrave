@@ -1,7 +1,6 @@
 # InstantPalgrave
 Instant Palgrave, the open-source digital assistant
 
-
 ## Setup dev
 
 Create a python3(.8??) virtualenv and then:
@@ -24,6 +23,16 @@ python3 palgrave.py backwards
 
 Supported implementations are `palgrave` (default, if you left blank), `echo`, `reverse`, and `backwards`.
 
+If you are not going to use Spotify, this is all you need.
+
+If you are using Spotify:
+* First: You need Premium for it to work
+* Second: go to https://developer.spotify.com
+* Third: tap Dashboard then Sign In
+* Fourth: create an app, set the redirect_uri to http://kaiete.github.io/InstantPalgrave/spotify/done
+* Fifth: put credentials into settings.ini
+* Sixth: launch Palgrave and say \`enable music\`
+* Palgrave will guide you through the steps.
 
 ## Trouble with pyaudio
 
