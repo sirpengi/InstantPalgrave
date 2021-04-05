@@ -323,7 +323,15 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("The outcome was " + str(random.randint(1,6)))
 		if "roll" in text and "die" in text:
 			self.respond("The outcome was " + str(random.randint(1,6)))
-				
+		if "what" in text and "weather" in text:
+			city = self.config["city"]
+			weatherapikey = self.config["weather-api-key"]
+			weatherapiurl = "https://api.weatherapi.com/v1/current.json?q={}&key={}".format(city,weatherapikey)
+			weather = requests.get(weatherapiurl)
+			weather = weather.text
+			weather = json.loads(weather)
+			weather = weather["current"]["condition"]["text"]
+			self.respond("The weather is currently {}".format(weather))
 		self.last = text
 
 
@@ -377,6 +385,7 @@ def main(bot_mode):
 			if text:
 				if not text == "huh":
 					text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
+					print("I heard '{}'".format(text))
 				stream.stop_stream()
 				robot.callback_receive_text(text)
 				stream.start_stream()
