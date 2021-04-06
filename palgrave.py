@@ -9,6 +9,7 @@ import webbrowser
 import urllib.parse
 import datetime
 from playsound import playsound
+import subprocess
 
 import pyaudio
 import spotipy
@@ -160,7 +161,7 @@ class PalgraveImplementation(BaseRobot):
 			return
 		spotify = spotipy.Spotify(auth=self.spotify_token)
 		spotify.start_playback()
-		
+
 	def pause_spotify(self):
 		if not self.spotify_enabled:
 			self.respond("Music mode is not enabled")
@@ -193,6 +194,7 @@ class PalgraveImplementation(BaseRobot):
 				self.timers.remove(timer)
 		if do_alarm:
 			playsound("alarm.wav")
+			subprocess.call("/home/kaiete/InstantPalgrave/notify.sh hello critical")
 
 	def callback_receive_text(self, text):
 		text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
@@ -325,9 +327,12 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("The outcome was " + str(random.randint(1,6)))
 		if "what" in text and "weather" in text:
 			city = self.config["city"]
-			weatherapikey = self.config["weather-api-key"]
-			weatherapiurl = "https://api.weatherapi.com/v1/current.json?q={}&key={}".format(city,weatherapikey)
-			weather = requests.get(weatherapiurl)
+			if self.config["debug"] == "on":
+				print("city: {}".format(city))
+			weatherapiurl = "https://palgrave-weather.kaiete.workers.dev"
+			weather = requests.post(weatherapiurl,data=city)
+			if self.config["debug"] == "on":
+				print("response: {}".format(weather.text))
 			weather = weather.text
 			weather = json.loads(weather)
 			weather = weather["current"]["condition"]["text"]
