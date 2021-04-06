@@ -34,6 +34,9 @@ If you are using Spotify:
 * Sixth: launch Palgrave and say \`enable music\`
 * Palgrave will guide you through the steps.
 
+If you are using "what's the weather":
+* First: go to settings.ini and set `city` to your city.
+
 ## Trouble with pyaudio
 
 In fedora I had to `dnf install portaudio-devel`. Ubuntu users might need `portaudio19-dev`
