@@ -337,6 +337,16 @@ class PalgraveImplementation(BaseRobot):
 			weather = json.loads(weather)
 			weather = weather["current"]["condition"]["text"]
 			self.respond("The weather is currently {}".format(weather))
+			if "what" in text and "lyrics" in text:
+				if not self.spotify_enabled:
+					self.respond("Music mode is not enabled. Please say, 'enable music'.")
+					return
+				self.respond("Ok, looking for this song's lyrics on duckduckgo")
+				spotify = spotipy.Spotify(auth=self.spotify_token)
+				track = spotify.current_user_playing_track()
+				trackname = track["item"]["name"]
+				artist = track["item"]["artists"][0]["name"]
+				webbrowser.open("https://duck.com/?q=lyrics%20{}%20{}".format(urllib.parse.quote(trackname),urllib.parse.quote(artist)))
 		self.last = text
 
 
