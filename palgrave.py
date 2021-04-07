@@ -194,7 +194,6 @@ class PalgraveImplementation(BaseRobot):
 				self.timers.remove(timer)
 		if do_alarm:
 			playsound("alarm.wav")
-			subprocess.call("/home/kaiete/InstantPalgrave/notify.sh hello critical")
 
 	def callback_receive_text(self, text):
 		text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
@@ -347,6 +346,13 @@ class PalgraveImplementation(BaseRobot):
 				trackname = track["item"]["name"]
 				artist = track["item"]["artists"][0]["name"]
 				webbrowser.open("https://duck.com/?q=lyrics%20{}%20{}".format(urllib.parse.quote(trackname),urllib.parse.quote(artist)))
+		x = open("commands.json")
+		x = json.loads(x.read())
+		if x["enabled"] == "true":
+			y = x["commands"]["list"]
+			for z in y:
+				if x["commands"][z]["wakeWord"] in text:
+					self.respond(x["commands"][z]["response"])
 		self.last = text
 
 

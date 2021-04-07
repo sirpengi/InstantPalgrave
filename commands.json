@@ -1,0 +1,11 @@
+{
+  "comment": "here you can put your own custom commands (example below). you have to relaunch for changes to take place.",
+  "enabled": "true",
+  "commands": {
+    "list": ["exampleCommand"],
+    "exampleCommand": {
+      "wakeWord": "example",
+      "response": "Hello! This is an example command."
+    }
+  }
+}
