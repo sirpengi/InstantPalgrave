@@ -5,7 +5,8 @@
     "list": ["exampleCommand"],
     "exampleCommand": {
       "wakeWord": "example",
-      "response": "Hello! This is an example command."
+      "response": "Hello! This is an example command.",
+      "execute": "print('hello! you just said example.')"
     }
   }
 }
