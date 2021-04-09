@@ -29,7 +29,7 @@ If you are using Spotify:
 * First: You need Premium for it to work
 * Second: go to https://developer.spotify.com
 * Third: tap Dashboard then Sign In
-* Fourth: create an app, set the redirect_uri to http://kaiete.github.io/InstantPalgrave/spotify/done
+* Fourth: create an app, set the redirect_uri to https://kaiete.uk/InstantPalgrave/spotify/done
 * Fifth: put credentials into settings.ini
 * Sixth: launch Palgrave and say \`enable music\`
 * Palgrave will guide you through the steps.
