@@ -42,4 +42,4 @@ If you are using "what's the weather":
 In fedora I had to `dnf install portaudio-devel`. Ubuntu users might need `portaudio19-dev`
 
 # Important!
-Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier
+Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier (you might be able to run palgrave in an ubuntu20.10 wsl thingy)
