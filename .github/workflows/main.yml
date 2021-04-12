@@ -33,4 +33,5 @@ jobs:
           sudo apt-get install portaudio19-dev
           pip install -r requirements.txt
           pip install urllib3
+          pip install testresources
           python3 palgrave.py
