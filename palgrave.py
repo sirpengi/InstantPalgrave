@@ -354,6 +354,7 @@ class PalgraveImplementation(BaseRobot):
 				if x["commands"][z]["wakeWord"] in text:
 					exec(x["commands"][z]["execute"])
 					self.respond(x["commands"][z]["response"])
+		
 
 		self.last = text
 
