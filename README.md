@@ -1,5 +1,5 @@
 # InstantPalgrave
-Instant Palgrave, the open-source digital assistant
+Instant Palgrave, the free open-source digital assistant who's ready to help even offline
 
 ## Setup dev
 
