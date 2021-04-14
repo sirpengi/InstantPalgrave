@@ -290,7 +290,7 @@ class PalgraveImplementation(BaseRobot):
 				time.sleep(0.6)
 				self.respond("You can say, thanks or i'm bored")
 			else:
-				self.respond("Sorry, an error occurred at line 132 approximately. I will send you to the link to report a bug.")
+				self.respond("Sorry, an error occurred at line 293 (IP-ERROR: Unexpected number neither below zero point five, nor above zero point five. Could be zero point five causing the error.) I will send you to an error reporting link.")
 				webbrowser.open("https://github.com/kaiete/InstantPalgrave/issues")
 		if "open" in text and "website" in text:
 			self.respond("Please type a URL")
