@@ -37,6 +37,9 @@ If you are using Spotify:
 If you are using "what's the weather":
 * First: go to settings.ini and set `city` to your city.
 
+If you are helping with the development:
+* First: go to settings.ini and set `debug` to `on`.
+
 ## Trouble with pyaudio
 
 In fedora I had to `dnf install portaudio-devel`. Ubuntu users might need `portaudio19-dev`
