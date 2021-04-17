@@ -354,6 +354,14 @@ class PalgraveImplementation(BaseRobot):
 				if x["commands"][z]["wakeWord"] in text:
 					exec(x["commands"][z]["execute"])
 					self.respond(x["commands"][z]["response"])
+		if "force" in text and "close" in text:
+			print("palgrave: Exception: manually initiated crash!")
+			print("exiting with error code MICV-{}\nplease DO NOT report this crash, it's not our fault\nYou were the one who said force close.".format(datetime.datetime.now()))
+			x = open(".log","a")
+			x.write("\nManually initiated crash, timestamp {}\n".format(datetime.datetime.now()))
+			x.close()
+			print("Logged, closing")
+			quit(1)
 		
 
 		self.last = text
