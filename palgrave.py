@@ -362,6 +362,21 @@ class PalgraveImplementation(BaseRobot):
 			x.close()
 			print("Logged, closing")
 			quit(1)
+		if "what" in text and "was" in text or "what" in text and "is" in text or "who" in text and "was" in text or "who" in text and "is" in text:
+			text = text.replace("who","").replace("was","").replace("is","").replace("what","")
+			x = requests.get("https://ac.ecosia.org/autocomplete?q=" + urllib.parse.quote(text))
+			x = json.loads(x.text)
+			if x["suggestions"][0] != text:
+				text = x["suggestions"][0]
+
+			with requests.get("https://en.wikipedia.org/wiki/" + text.replace(" ","_")) as y:
+				if "Wikipedia does not have an article with this exact name" in y.text:
+					self.respond("I'm sorry, I don't know who that is. Try saying it in a different way, or removing any articles, like thee")
+					#'thee' is instead of 'the' above because otherwise he pronounces it in a kind of hard to understand way
+				else:
+					self.respond("Here's what I found on Wikipedia")
+					webbrowser.open("https://en.wikipedia.org/wiki/" + text.replace(" ","_"))
+
 		
 
 		self.last = text
