@@ -306,7 +306,7 @@ class PalgraveImplementation(BaseRobot):
 		if "note" in text and "get" in text or "note" in text and "what" in text:
 			self.respond("Your note is: . " + open("palgravenotes","r").read())
 		if "google" in text and "auth" in text:
-			webbrowser.open("https://kaiete.github.io/InstantPalgrave/authbygoogle/")
+			webbrowser.open("https://kaiete.uk/InstantPalgrave/authbygoogle")
 		if "what" in text and "i" in text and "said" in text or "what" in text and "i" in text and "say" in text:
 			if not self.last == None:
 				self.respond("You just said" + self.last)
