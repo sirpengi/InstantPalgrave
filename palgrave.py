@@ -236,6 +236,13 @@ class PalgraveImplementation(BaseRobot):
 				self.respond("Ok! anything I can do for you, just ask, I'll always be there. Bye for now!")
 				self.mode = None
 				return
+		if self.mode == "palgraveAnswers":
+			y = requests.post("https://palgrave-answers.kaiete.workers.dev", data=text)
+			y = y.text
+			if not y == "Wolfram|Alpha did not understand your input":
+				self.respond("According to Wolfram Alpha, " + y)
+			else:
+				self.respond("Hmmm, I'm not sure about that. Sorry.")
 
 		if text == "palgrave":
 			self.respond("Hello!")
@@ -346,14 +353,6 @@ class PalgraveImplementation(BaseRobot):
 				trackname = track["item"]["name"]
 				artist = track["item"]["artists"][0]["name"]
 				webbrowser.open("https://duck.com/?q=lyrics%20{}%20{}".format(urllib.parse.quote(trackname),urllib.parse.quote(artist)))
-		x = open("commands.json")
-		x = json.loads(x.read())
-		if x["enabled"] == "true":
-			y = x["commands"]["list"]
-			for z in y:
-				if x["commands"][z]["wakeWord"] in text:
-					exec(x["commands"][z]["execute"])
-					self.respond(x["commands"][z]["response"])
 		if "force" in text and "close" in text:
 			print("palgrave: Exception: manually initiated crash!")
 			print("exiting with error code MICV-{}\nplease DO NOT report this crash, it's not our fault\nYou were the one who said force close.".format(datetime.datetime.now()))
@@ -362,20 +361,22 @@ class PalgraveImplementation(BaseRobot):
 			x.close()
 			print("Logged, closing")
 			quit(1)
-		if "what" in text and "was" in text or "what" in text and "is" in text or "who" in text and "was" in text or "who" in text and "is" in text:
-			text = text.replace("who","").replace("was","").replace("is","").replace("what","")
-			x = requests.get("https://ac.ecosia.org/autocomplete?q=" + urllib.parse.quote(text))
-			x = json.loads(x.text)
-			if x["suggestions"][0] != text:
-				text = x["suggestions"][0]
 
-			with requests.get("https://en.wikipedia.org/wiki/" + text.replace(" ","_")) as y:
-				if "Wikipedia does not have an article with this exact name" in y.text:
-					self.respond("I'm sorry, I don't know who that is. Try saying it in a different way, or removing any articles, like thee")
-					#'thee' is instead of 'the' above because otherwise he pronounces it in a kind of hard to understand way
+		if "hey palgrave" in text or "ok palgrave" in text:
+			x = text
+			x = x.replace("hey palgrave","").replace("ok palgrave","")
+			if x == "":
+				self.mode = "palgraveAnswers"
+				self.respond("Hello! Ask me anything")
+				return
+			else:
+				y = requests.post("https://palgrave-answers.kaiete.workers.dev", data=x)
+				y = y.text
+				if not y == "Wolfram|Alpha did not understand your input":
+					self.respond("According to Wolfram Alpha, " + y)
 				else:
-					self.respond("Here's what I found on Wikipedia")
-					webbrowser.open("https://en.wikipedia.org/wiki/" + text.replace(" ","_"))
+					self.respond("Hmmm, I'm not sure about that. Sorry.")
+
 
 		
 
