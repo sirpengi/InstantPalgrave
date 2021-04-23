@@ -243,6 +243,7 @@ class PalgraveImplementation(BaseRobot):
 				self.respond("According to Wolfram Alpha, " + y)
 			else:
 				self.respond("Hmmm, I'm not sure about that. Sorry.")
+			return
 
 		if text == "palgrave":
 			self.respond("Hello!")
