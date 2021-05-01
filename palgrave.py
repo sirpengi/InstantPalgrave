@@ -204,7 +204,7 @@ class PalgraveImplementation(BaseRobot):
 			return
 		if self.mode == "awaitingNote":
 			notes = open("palgravenotes","a")
-			notes.write(text)
+			notes.write(text + ".\n")
 			self.respond("Note saved successfully!")
 			self.mode = None
 			return
@@ -364,6 +364,7 @@ class PalgraveImplementation(BaseRobot):
 			print("Logged, closing")
 			quit(1)
 
+# Wolfram|Aplha is not endorsed in any way by InstantPalgrave, and Wolfram|Alpha has not sponsored or endorsed this integration. I just thought it would be a good idea.
 		if "hey palgrave" in text or "ok palgrave" in text:
 			x = text
 			x = x.replace("hey palgrave","").replace("ok palgrave","")
@@ -378,8 +379,22 @@ class PalgraveImplementation(BaseRobot):
 					self.respond("According to Wolfram Alpha, " + y)
 				else:
 					self.respond("Hmmm, I'm not sure about that. Sorry.")
-
-
+		if "my day" in text:
+			self.respond("Hey there! Here's the lowdown.")
+			x = requests.post("https://palgrave-weather.kaiete.workers.dev",data=self.config["city"]).text
+			x = json.loads(x)["current"]["condition"]["text"]
+			# Not gonna do time.sleep for a pause in speech here, internet delay will do that for me
+			self.respond("First, outside in {} it looks {}".format(self.config["city"],x))
+			time.sleep(.6)
+			self.respond("The time right now is " + str(datetime.datetime.now().strftime("%H %M")))#can you see where I got that snippet
+			time.sleep(.6)
+			self.respond("The date today is " + str(datetime.date.today().strftime("%A the %d of %B, %Y")))
+			time.sleep(.6)
+			y = open("palgravenotes")
+			self.respond("Here's your notes: {}".format(y.read()))
+			y.close()
+			time.sleep(.6)
+			self.respond("That's all for now. See you later!")
 		
 
 		self.last = text
