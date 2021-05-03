@@ -1,3 +1,48 @@
+import platform
+import os
+import time
+x = platform.system()
+if not x == "Linux" and not x == "Darwin":
+	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
+	quit()
+elif x == "Darwin":
+	print("You're using a iMac. InstantPalgrave won't run there, sorry! Try Linux.")
+	quit()
+if os.environ.get("perl") == "yes":
+	print("perl? ok")
+	os.system("perl palgrave.pl")
+	print("you want perl, you get perl")
+	print("adios, python")
+	time.sleep(1)
+	print("""Traceback (most recent call last):
+  File "palgrave.py", line 17, in <module>
+    raise Exception()
+Exception
+""")
+	print("""Traceback (most recent call last):
+  File "palgrave.py", line 22, in <module>
+    raise IOError()
+OSError
+""")
+	print("""Traceback (most recent call last):
+  File "palgrave.py", line 17, in <module>
+    raise Exception()
+Exception
+
+Traceback (most recent call last):
+  File "palgrave.py", line 22, in <module>
+    raise IOError()
+OSError
+
+Traceback (most recent call last):
+  File "palgrave.py", line 27, in <module>
+    raise ImportError()
+ImportError
+""")
+	raise EOFError()
+	raise NameError()
+	raise NotADirectoryError()
+	raise KeyboardInterrupt()
 import configparser
 import json
 from pathlib import Path
@@ -19,8 +64,18 @@ import os
 import dateparser.search
 
 # Make sure that palgrave command exists
-if not os.path.exists("/usr/bin/palgrave"):
-	print("\033[31m" + "palgrave: TIP: for ease of access, please\npalgrave: TIP: type in the following commands in terminal:\ncd /usr/bin && touch palgrave\nsudo *text editor here - gedit for example* palgrave\nthen type in your text editor the following:\n#!/bin/bash\npreviousdir=$(pwd)\ncd /home/*username*/InstantPalgrave\npython3 palgrave.py" + "\033[0m")
+if not os.path.exists(os.environ.get("HOME") + "/.local/bin/palgrave"):
+	print("\033[31m" + "Hmmm, looks like you haven't got the palgrave command. It's being installed for your convenience." + "\033[0m")
+	x = open(os.environ.get("HOME") + "/.local/bin/palgrave","w")
+	print("hi",end="")
+	x.write("#!/bin/bash\npython3 " + os.environ.get("HOME") + "/InstantPalgrave/palgrave.py $1\n")
+	print("#",end="")
+	x.close()
+	print("#",end="")
+	time.sleep(.6)
+	os.system("chmod +x $HOME/.local/share/palgrave")
+	print("#]")
+	print("Done!\nYou can now just type `palgrave` into your terminal to launch palgrave!")
 MODEL = "vosk-model-small-en-us-0.15"
 AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
@@ -395,6 +450,13 @@ class PalgraveImplementation(BaseRobot):
 			y.close()
 			time.sleep(.6)
 			self.respond("That's all for now. See you later!")
+		with open("commands.json") as commands:
+			commands = json.loads(commands.read())
+			if commands["enabled"] == "true":
+				x = commands["commands"]["list"][0]
+				if commands["commands"][x]["wakeWord"] == text:
+					exec(commands["commands"][x]["execute"])
+					self.respond(commands["commands"][x]["response"])
 		
 
 		self.last = text

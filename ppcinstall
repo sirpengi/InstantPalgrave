@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+# This code is Copyright 2021 kaiete, and can be used under the MIT License. https://mit-license.org
+print("  |  |")
+print(" \\____/\n\nWelcome to the PPC (Palgrave Package Center) Installer!\nFirst, do you want to install ppc just for (Y)ou, or (E)veryone? (e/y)")
+x = input()
+if x == "e" or x == "E":
+    print("OK! Everyone it is, then. (You'll need to be a sudoer or root for this.)")
+    import os
+    os.system("sudo touch /usr/bin/ppc && sudo echo -E '#\!/bin/bash\npython3 $HOME/InstantPalgrave/ppc.py'")
+    print("OK! PPC is installed, now let's chmod +x it. (type `cd /usr/bin && sudo chmod +x ppc && exit` below)")
+    os.system("sh")
+    print("All done! PPC is ready to go.")
+elif x == "y" or x == "e":
+    print("Just you? OK! Installing...")
+    import os
+    os.system("touch $HOME/.local/bin/ppc && echo '#\!/bin/bash\npython3 $HOME/InstantPalgrave/ppc.py' > $HOME/.local/bin/ppc")
+    print("OK! PPC is installed, now let's chmod +x it. (type `cd $HOME/.local/bin && chmod +x ppc && exit` below)")
+    os.system("sh")
+    print("All done! PPC is ready to go.")
