@@ -24,14 +24,13 @@ if x == "i":
     y = input()
     if y.lower() != "n":
         commands = requests.get("https://raw.githubusercontent.com/{}/main/commands.json".format(pkg))
-        with open("{}/InstantPalgrave/commands.json".format(os.environ.get("HOME")),"w") as commandfile:
+        with open("{}/InstantPalgrave/pkg/{}.json".format(os.environ.get("HOME"), ppcdotjson["name"]),"w") as commandfile:
             commandfile.write(commands.text)
+            commandfile.close()
         print("All done! Installed successfully.")
     else:
         print("Cancelled, nothing has been installed.")
 elif x == "u":
     print("[",end="")
-    z = open("commands.json","w")
-    z.write("{{}}")
-    z.close()
+    os.system("rm -rf {home}/InstantPalgrave/pkg && mkdir {home}/InstantPalgrave/pkg".format(home=os.environ.get("HOME")))
     print("#]\nPackages have been uninstalled.")

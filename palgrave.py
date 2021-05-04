@@ -450,13 +450,15 @@ class PalgraveImplementation(BaseRobot):
 			y.close()
 			time.sleep(.6)
 			self.respond("That's all for now. See you later!")
-		with open("commands.json") as commands:
-			commands = json.loads(commands.read())
-			if commands["enabled"] == "true":
-				x = commands["commands"]["list"][0]
-				if commands["commands"][x]["wakeWord"] == text:
-					exec(commands["commands"][x]["execute"])
-					self.respond(commands["commands"][x]["response"])
+		y = os.listdir("{}/InstantPalgrave/pkg".format(os.environ.get("HOME")))
+		for z in y:
+			with open("{}/InstantPalgrave/pkg/{}".format(os.environ.get("HOME"),z)) as commands:
+				commands = json.loads(commands.read())
+				if commands["enabled"] == "true":
+					x = commands["commands"]["list"][0]
+					if commands["commands"][x]["wakeWord"] == text:
+						exec(commands["commands"][x]["execute"])
+						self.respond(commands["commands"][x]["response"])
 		
 
 		self.last = text

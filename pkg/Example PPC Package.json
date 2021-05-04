@@ -1,0 +1,11 @@
+{
+    "enabled": "true",
+    "commands": {
+      "list": ["whoIsPalgrave"],
+      "whoIsPalgrave": {
+        "wakeWord": "who are you",
+        "response": "Hello! My name is Palgrave.",
+        "execute": "pass"
+      }
+    }
+}
