@@ -6,7 +6,7 @@ x = input()
 if x == "e" or x == "E":
     print("OK! Everyone it is, then. (You'll need to be a sudoer or root for this.)")
     import os
-    os.system("sudo touch /usr/bin/ppc && sudo echo -E '#\!/bin/bash\npython3 $HOME/InstantPalgrave/ppc.py'")
+    os.system("sudo touch /usr/bin/ppc && sudo echo '#\!/bin/bash\npython3 $HOME/InstantPalgrave/ppc.py'")
     print("OK! PPC is installed, now let's chmod +x it. (type `cd /usr/bin && sudo chmod +x ppc && exit` below)")
     os.system("sh")
     print("All done! PPC is ready to go.")
