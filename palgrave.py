@@ -1,6 +1,26 @@
 import platform
 import os
 import time
+if not os.path.exists(".waconfigdone.pconfig"):
+	import gi
+	gi.require_version("Gtk","3.0")
+	from gi.repository import Gtk
+	class ourwindow(Gtk.Window):
+		def __init__(self):
+			Gtk.Window.__init__(self, title="Palgrave")
+			Gtk.Window.set_default_size(self, 210,150)
+			Gtk.Window.set_position(self, Gtk.WindowPosition.CENTER)
+			info = Gtk.Button("Thank you for using Palgrave!\n By tapping this button, you DO NOT wish anything you say with 'hey palgrave' or 'ok palgrave' before it to be sent to Wolfram|Alpha.\n Otherwise, if you agree to the above, close this window (the x in the top right).")
+			def disagree(button):
+				open(".no-wa.pconfig","w").close()
+				Gtk.Window.close(self)
+			info.connect("clicked",disagree)
+			self.add(info)
+	window = ourwindow()
+	window.connect("delete-event", Gtk.main_quit)
+	window.show_all()
+	Gtk.main()
+	open(".waconfigdone.pconfig","w").close()
 x = platform.system()
 if not x == "Linux" and not x == "Darwin":
 	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
@@ -420,9 +440,12 @@ class PalgraveImplementation(BaseRobot):
 			quit(1)
 
 # Wolfram|Aplha is not endorsed in any way by InstantPalgrave, and Wolfram|Alpha has not sponsored or endorsed this integration. I just thought it would be a good idea.
-		if "hey palgrave" in text or "ok palgrave" in text:
+		if "hey palgrave" in text or "okay palgrave" in text:
+			if os.path.exists(".no-wa.pconfig"):
+				self.respond("You opted out of that feature.")
+				return
 			x = text
-			x = x.replace("hey palgrave","").replace("ok palgrave","")
+			x = x.replace("hey palgrave","").replace("okay palgrave","")
 			if x == "":
 				self.mode = "palgraveAnswers"
 				self.respond("Hello! Ask me anything")
