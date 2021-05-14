@@ -479,7 +479,7 @@ class PalgraveImplementation(BaseRobot):
 				commands = json.loads(commands.read())
 				if commands["enabled"] == "true":
 					x = commands["commands"]["list"][0]
-					if commands["commands"][x]["wakeWord"] == text:
+					if commands["commands"][x]["wakeWord"] in text:
 						exec(commands["commands"][x]["execute"])
 						self.respond(commands["commands"][x]["response"])
 		
