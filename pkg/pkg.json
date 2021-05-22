@@ -5,7 +5,7 @@
     "openPPC": {
       "wakeWord": "packages",
       "response": "OK, opening Palgrave Package Center in your terminal...",
-      "execute": "os.system('cat {}/InstantPalgrave/ppc.py | bash'.format(os.environ['HOME']))"
+      "execute": "os.system('cat {}/InstantPalgrave/ppc.py | python3'.format(os.environ['HOME']))"
     }
   }
 }
