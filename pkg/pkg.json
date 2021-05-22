@@ -1,0 +1,11 @@
+{
+  "enabled": "true",
+  "commands": {
+    "list": ["openPPC"],
+    "openPPC": {
+      "wakeWord": "packages",
+      "response": "OK, opening Palgrave Package Center in your terminal...",
+      "execute": "os.system('cat {}/InstantPalgrave/ppc.py | bash\'.format(os.environ['HOME']))"
+    }
+  }
+}
