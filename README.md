@@ -5,19 +5,25 @@ Instant Palgrave, the free open-source digital assistant who's ready to help eve
 
 Create a python3(.8??) virtualenv and then:
 
-```console
+```bash
+# You need root to install portaudio
 pip install -r requirements.txt
+# On Ubuntu / PiOS / anything with apt (except Termux):
+apt-get install portaudio19-dev
+# On Fedora
+dnf install portaudio-devel
+# dev or devel is for development i.e. stable I guess
 ```
 
 and then:
 
-```console
+```bash
 python3 palgrave.py
 ```
 
 There are other bot modes you can run by specifying the bot implementation:
 
-```console
+```bash
 python3 palgrave.py backwards
 ```
 
@@ -42,9 +48,9 @@ If you are using "what's the weather":
 If you are helping with the development:
 * First: go to settings.ini and set `debug` to `on`.
 
-## Trouble with pyaudio
-
-In fedora I had to `dnf install portaudio-devel`. Ubuntu users might need `portaudio19-dev`
-
 # Important!
 Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier (you might be able to run palgrave in an ubuntu20.04 wsl thingy, IDK). If you really want palgrave and you don't want Linux (for some odd reason) here you go https://gitlab.com/kaiete/palgrave-txt
+
+*i might make PalgraveOS at some point*
+
+*maybe.....*
