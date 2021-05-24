@@ -33,6 +33,7 @@ If you are using Spotify:
 * Fifth: put credentials into settings.ini (these will never be shared with anyone else, ever. Never enter your Spotify password here.)
 * Sixth: launch Palgrave and say \`enable music\`
 * Palgrave will guide you through the steps.
+
 *Deezer support coming soon.*
 
 If you are using "what's the weather":
