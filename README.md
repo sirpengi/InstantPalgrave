@@ -30,9 +30,10 @@ If you are using Spotify:
 * Second: go to https://developer.spotify.com
 * Third: tap Dashboard then Sign In
 * Fourth: create an app, set the redirect_uri to https://kaiete.uk/InstantPalgrave/spotify/done
-* Fifth: put credentials into settings.ini
+* Fifth: put credentials into settings.ini (these will never be shared with anyone else, ever. Never enter your Spotify password here.)
 * Sixth: launch Palgrave and say \`enable music\`
 * Palgrave will guide you through the steps.
+*Deezer support coming soon.*
 
 If you are using "what's the weather":
 * First: go to settings.ini and set `city` to your city.
