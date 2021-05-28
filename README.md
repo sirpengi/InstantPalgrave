@@ -3,6 +3,8 @@ Instant Palgrave, the free open-source digital assistant who's ready to help eve
 
 ## Setup dev
 
+*By using Palgrave, you agree to the terms set out in terms.md, section 1 and by forking and then editing, you agree to section 2.*
+
 Create a python3(.8??) virtualenv and then:
 
 ```bash
