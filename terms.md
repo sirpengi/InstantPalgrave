@@ -9,6 +9,7 @@ By using the Palgrave service, you agree to the following section:
 * You may not operate the Service in such a way that it would affect other Users' experience with the Service without their consent.
 * You may edit your own copy in any way that complies with the License. (https://mit-license.org)
 * You may not in any way recommend or endorse any other User to violate these Terms.
+* You may not deliberately attempt to cause a DoS/DDoS attack on any provided Servers (any domain specified by `requests.get` or any other http method in the code). 
 
 ## Edited copies
 * If You fork or duplicate this repository, You may freely edit Your own copy. However, You must include and may not edit the files `terms.md` and `LICENSE`.
@@ -16,4 +17,5 @@ By using the Palgrave service, you agree to the following section:
 
 -----------------
 
-Have fun!
+# The most important bit
+### Have fun!
