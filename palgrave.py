@@ -1,5 +1,33 @@
-import platform
 import os
+if not os.path.exists(".setupdone.pconfig"):
+	env = os.environ
+	print("Hi! Welcome to InstantPalgrave!\nLet's get Palgrave up and running.\nDo you want to set Palgrave up manually, or automatically? (m/A) ",end="")
+	x = input()
+	print("\n")
+	if not x.lower() == "m":
+		print("OK! Installing packages... (stick around - you might need to enter your password)")
+		os.system("sudo apt install portaudio19-dev --quiet")
+		print("#",end="")
+		os.system("pip install -r {}requirements.txt --quiet".format(env["HOME"] + "/InstantPalgrave/"))
+		print("#")
+		print("Done!")
+		print("Where do you live? (This isn't needed, it's only used for weather data. If you don't want to tell us, put in Pennsylvania or something random.)")
+		place = input()
+		with open("settings.ini") as x:
+			y = x.read()
+			y = y.replace("whereILive",place)
+			x.close()
+			print(y)
+			x = open("{}settings.ini".format(env["HOME"] + "/InstantPalgrave/"),"w")
+			x.write(y)
+			x.close()
+		print("OK! Palgrave is all ready.")
+		open(".setupdone.pconfig","w").close()
+	else:
+		print("OK! Exiting setup")
+		open("{}/InstantPalgrave/.setupdone.pconfig".format(env["HOME"]),"w").close()
+		quit()
+import platform
 import time
 if not os.path.exists(".waconfigdone.pconfig"):
 	import gi
@@ -26,7 +54,7 @@ if not x == "Linux" and not x == "Darwin":
 	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
 	quit()
 elif x == "Darwin":
-	print("You're using a iMac. InstantPalgrave won't run there, sorry! Try Linux.")
+	print("You're using a Mac. InstantPalgrave won't run there, sorry! Try Linux.")
 	quit()
 if os.environ.get("perl") == "yes":
 	print("perl? ok")
@@ -60,9 +88,6 @@ Traceback (most recent call last):
 ImportError
 """)
 	raise EOFError()
-	raise NameError()
-	raise NotADirectoryError()
-	raise KeyboardInterrupt()
 import configparser
 import json
 from pathlib import Path
@@ -482,6 +507,8 @@ class PalgraveImplementation(BaseRobot):
 					if commands["commands"][x]["wakeWord"] in text:
 						exec(commands["commands"][x]["execute"])
 						self.respond(commands["commands"][x]["response"])
+		if "repeat" in text:
+			self.respond(text.replace("repeat",""))
 		
 
 		self.last = text
