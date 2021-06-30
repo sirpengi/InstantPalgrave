@@ -1,0 +1,11 @@
+{
+  "enabled": "true",
+  "commands": {
+    "list": ["openPPC"],
+    "openPPC": {
+      "wakeWord": "packages",
+      "response": "OK, opening Palgrave Package Center in your terminal...",
+      "execute": "os.system('gnome-terminal -- \"/bin/bash -c \\'cat {}/InstantPalgrave/ppc.py | python3\\'\"'.format(os.environ['HOME']))"
+    }
+  }
+}

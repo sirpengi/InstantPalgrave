@@ -2,3 +2,5 @@ settings.ini
 .pyc
 __pycache__
 .cache-*
+commands.json
+*.pconfig
