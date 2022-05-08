@@ -56,3 +56,5 @@ Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fe
 *i might make PalgraveOS at some point*
 
 *maybe.....*
+
+*it would be very text-based (think MS-DOS)*

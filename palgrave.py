@@ -54,7 +54,7 @@ if not x == "Linux" and not x == "Darwin":
 	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
 	quit()
 elif x == "Darwin":
-	print("You're using a Mac. InstantPalgrave won't run there, sorry! Try Linux.")
+	print("You're using a Mac. InstantPalgrave won't run there without a bit of tweaking, sorry! Try Linux.")
 	quit()
 if os.environ.get("perl") == "yes":
 	print("perl? ok")
