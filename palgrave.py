@@ -219,6 +219,7 @@ class PalgraveImplementation(BaseRobot):
 		self.spotify_token = None
 		self.last = None
 		self.timers = set()
+		self.mute = False
 
 	def enable_spotify(self):
 		if self.spotify_enabled:
@@ -296,6 +297,13 @@ class PalgraveImplementation(BaseRobot):
 			playsound("alarm.wav")
 
 	def callback_receive_text(self, text):
+		if text == "start listening again":
+				self.mute == False
+				self.respond("OK, I'll start listening again")
+				return
+		if text == "mute":
+			self.respond("OK, I'll stop processing what I hear you say until you say, Start listening again")
+			self.mute = True
 		text = text.replace("how grave","palgrave").replace("paul grave","palgrave").replace("how grave","palgrave")
 		if self.mode == "awaitingSearch":
 			webbrowser.open("https://duckduckgo.com/?q=" + urllib.parse.quote(text))
@@ -328,7 +336,7 @@ class PalgraveImplementation(BaseRobot):
 				self.mode = None
 				return
 			elif "boring" in text or "bad" in text or "sad" in text or "not fun" in text:
-				self.respond("Oh dear, that doesn't sound good. I hope you're happy though, because your feelings are my feelings so if you're feeling sad, I feel sad, and I don't want anyone to be sad.")
+				self.respond("Oh dear, that doesn't sound good. I hope you'll feel better soon.")
 				self.respond("If I can help or cheer you up, just ask. Bye for now!")
 				self.mode = None
 				return
