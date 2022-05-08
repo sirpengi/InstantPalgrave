@@ -42,7 +42,7 @@ If you are using Spotify:
 * Sixth: launch Palgrave and say \`enable music\`
 * Palgrave will guide you through the steps.
 
-*Deezer support coming soon.*
+*Deezer support may be added later.*
 
 If you are using "what's the weather":
 * First: go to settings.ini and set `city` to your city.
