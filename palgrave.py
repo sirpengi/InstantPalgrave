@@ -56,38 +56,6 @@ if not x == "Linux" and not x == "Darwin":
 elif x == "Darwin":
 	print("You're using a Mac. InstantPalgrave won't run there without a bit of tweaking, sorry! Try Linux.")
 	quit()
-if os.environ.get("perl") == "yes":
-	print("perl? ok")
-	os.system("perl palgrave.pl")
-	print("you want perl, you get perl")
-	print("adios, python")
-	time.sleep(1)
-	print("""Traceback (most recent call last):
-  File "palgrave.py", line 17, in <module>
-    raise Exception()
-Exception
-""")
-	print("""Traceback (most recent call last):
-  File "palgrave.py", line 22, in <module>
-    raise IOError()
-OSError
-""")
-	print("""Traceback (most recent call last):
-  File "palgrave.py", line 17, in <module>
-    raise Exception()
-Exception
-
-Traceback (most recent call last):
-  File "palgrave.py", line 22, in <module>
-    raise IOError()
-OSError
-
-Traceback (most recent call last):
-  File "palgrave.py", line 27, in <module>
-    raise ImportError()
-ImportError
-""")
-	raise EOFError()
 import configparser
 import json
 from pathlib import Path
