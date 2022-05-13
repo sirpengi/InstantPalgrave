@@ -265,10 +265,12 @@ class PalgraveImplementation(BaseRobot):
 			playsound("alarm.wav")
 
 	def callback_receive_text(self, text):
-		if text == "start listening again":
-				self.mute == False
+		if "start listening again" in text and self.mute:
+				self.mute = False
 				self.respond("OK, I'll start listening again")
 				return
+		if self.mute:
+			return
 		if text == "mute":
 			self.respond("OK, I'll stop processing what I hear you say until you say, Start listening again")
 			self.mute = True
