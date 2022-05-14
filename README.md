@@ -50,11 +50,21 @@ If you are using "what's the weather":
 If you are helping with the development:
 * First: go to settings.ini and set `debug` to `on`.
 
+***Never*** commit your personal settings.ini file.
+
+## Making Packages with PPC
+
+If you want to make an add-on for Palgrave, you can do so!
+
+Find a tutorial at https://github.com/kaiete/example-palgrave-package
+
+## Palgrave Package Center
+
+To install packages (aka add-ons), go to the directory where you have installed Palgrave and run `./ppcinstall`. The installer will guide you throught the steps.
+
+If something goes wrong, create an issue [here](https://github.com/kaiete/InstantPalgrave/issues).
+
 # Important!
 Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier (you might be able to run palgrave in an ubuntu20.04 wsl thingy, IDK). If you really want palgrave and you don't want Linux (for some odd reason) here you go https://gitlab.com/kaiete/palgrave-txt
 
-*i might make PalgraveOS at some point*
 
-*maybe.....*
-
-*it would be very text-based (think MS-DOS)*
