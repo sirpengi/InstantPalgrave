@@ -280,10 +280,23 @@ class PalgraveImplementation(BaseRobot):
 			self.respond("Opening web browser")
 			self.mode = None
 			return
+		if self.mode == "note-delete":
+			if text == "yes":
+				notes = open("palgravenotes","w")
+				notes.write("")
+				notes.close()
+				self.respond("Note deleted.")
+				self.mode = None
+				return
+			else:
+				self.respond("Nothing has been changed.")
+				self.mode = None
+				return
 		if self.mode == "awaitingNote":
 			notes = open("palgravenotes","a")
 			notes.write(text + ".\n")
 			self.respond("Note saved successfully!")
+			notes.close()
 			self.mode = None
 			return
 		if self.mode == "conversation1":
@@ -441,6 +454,10 @@ class PalgraveImplementation(BaseRobot):
 			x.close()
 			print("Logged, closing")
 			quit(1)
+		if "delete" in text and "note" in text:
+			self.respond("Are you sure you want to delete your notes?")
+			self.mode = "note-delete"
+			return
 
 # Wolfram|Aplha is not endorsed in any way by InstantPalgrave, and Wolfram|Alpha has not sponsored or endorsed this integration. I just thought it would be a good idea.
 		if "hey palgrave" in text or "okay palgrave" in text:
