@@ -8,7 +8,7 @@ if not os.path.exists(".setupdone.pconfig"):
 		print("OK! Installing packages... (stick around - you might need to enter your password)")
 		os.system("sudo apt install portaudio19-dev --quiet")
 		print("#",end="")
-		os.system("pip install -r {}requirements.txt --quiet".format(env["HOME"] + "/InstantPalgrave/"))
+		os.system("pip install -r {}requirements.txt --quiet".format(env["PWD"] + "/"))
 		print("#")
 		print("Done!")
 		print("Where do you live? (This isn't needed, it's only used for weather data. If you don't want to tell us, put in Pennsylvania or something random.)")
@@ -18,36 +18,21 @@ if not os.path.exists(".setupdone.pconfig"):
 			y = y.replace("whereILive",place)
 			x.close()
 			print(y)
-			x = open("{}settings.ini".format(env["HOME"] + "/InstantPalgrave/"),"w")
+			x = open("{}settings.ini".format(env["PWD"] + "/"),"w")
 			x.write(y)
 			x.close()
 		print("OK! Palgrave is all ready.")
 		open(".setupdone.pconfig","w").close()
 	else:
 		print("OK! Exiting setup")
-		open("{}/InstantPalgrave/.setupdone.pconfig".format(env["HOME"]),"w").close()
+		open("{}/InstantPalgrave/.setupdone.pconfig".format(env["PWD"]),"w").close()
 		quit()
 import platform
 import time
 if not os.path.exists(".waconfigdone.pconfig"):
-	import gi
-	gi.require_version("Gtk","3.0")
-	from gi.repository import Gtk
-	class ourwindow(Gtk.Window):
-		def __init__(self):
-			Gtk.Window.__init__(self, title="Palgrave")
-			Gtk.Window.set_default_size(self, 210,150)
-			Gtk.Window.set_position(self, Gtk.WindowPosition.CENTER)
-			info = Gtk.Button("Thank you for using Palgrave!\n By tapping this button, you DO NOT wish anything you say with 'hey palgrave' or 'ok palgrave' before it to be sent to Wolfram|Alpha.\n Otherwise, if you agree to the above, close this window (the x in the top right).")
-			def disagree(button):
-				open(".no-wa.pconfig","w").close()
-				Gtk.Window.close(self)
-			info.connect("clicked",disagree)
-			self.add(info)
-	window = ourwindow()
-	window.connect("delete-event", Gtk.main_quit)
-	window.show_all()
-	Gtk.main()
+	wa = input("Please type no below if you don't want to use Wolfram Alpha.\n")
+	if wa == "no":
+		open(".no-wa.pconfig","w").close()
 	open(".waconfigdone.pconfig","w").close()
 x = platform.system()
 if not x == "Linux" and not x == "Darwin":
