@@ -22,7 +22,10 @@ and then:
 ```bash
 python3 palgrave.py
 ```
-
+On crostini (linux vm in chrome os) you first need to:
+```bash
+sudo apt install espeak alsa-utils
+```
 There are other bot modes you can run by specifying the bot implementation:
 
 ```bash
