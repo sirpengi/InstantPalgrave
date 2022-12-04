@@ -37,9 +37,11 @@ if not os.path.exists(".waconfigdone.pconfig"):
 x = platform.system()
 if not x == "Linux" and not x == "Darwin":
 	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
-	quit()
+	confirmUnrecognised = input("Type y to continue anyway.\n> ")
+	if confirmUnrecognised != "y":
+		quit()
 elif x == "Darwin":
-	print("Looks like you're using a Mac, which Palgrave doesn't have support for. Y to continue anyways.\n")
+	print("Looks like you're using a Mac, which Palgrave doesn't have support for. Y (capital) to continue anyways.\n")
 	confirmMac = input()
 	if confirmMac != 'Y':
 		quit()
@@ -63,23 +65,25 @@ import vosk
 import os
 import dateparser.search
 
-# Make sure that palgrave command exists
-if not os.path.exists(os.environ.get("HOME") + "/.local/bin/palgrave"):
-	try:
-		print("\033[31m" + "Hmmm, looks like you haven't got the palgrave command. It's being installed for your convenience." + "\033[0m")
-		x = open(os.environ.get("HOME") + "/.local/bin/palgrave","w")
-		print("hi",end="")
-		x.write("#!/bin/bash\npython3 " + os.environ.get("HOME") + "/InstantPalgrave/palgrave.py $1\n")
-		print("#",end="")
-		x.close()
-		print("#",end="")
-		time.sleep(.6)
-		os.system("chmod +x $HOME/.local/share/palgrave")
-		print("#]")
-	except:
-		print('An error occurred, so the palgrave command wasn\'t installed')
-	else:
-		print("Done!\nYou can now just type `palgrave` into your terminal to launch palgrave!")
+# Make sure that palgrave command exists but don't
+# install it on Windows (different proceedure)
+if x == "Linux" or x == "Darwin":
+	if not os.path.exists(os.environ.get("HOME") + "/.local/bin/palgrave"):
+		try:
+			print("\033[31m" + "Hmmm, looks like you haven't got the palgrave command. It's being installed for your convenience." + "\033[0m")
+			x = open(os.environ.get("HOME") + "/.local/bin/palgrave","w")
+			print("hi",end="")
+			x.write("#!/bin/bash\npython3 " + os.environ.get("HOME") + "/InstantPalgrave/palgrave.py $1\n")
+			print("#",end="")
+			x.close()
+			print("#",end="")
+			time.sleep(.6)
+			os.system("chmod +x $HOME/.local/share/palgrave")
+			print("#]")
+		except:
+			print('An error occurred, so the palgrave command wasn\'t installed')
+		else:
+			print("Done!\nYou can now just type `palgrave` into your terminal to launch palgrave!")
 MODEL = "vosk-model-small-en-us-0.15"
 AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
@@ -484,6 +488,9 @@ class PalgraveImplementation(BaseRobot):
 			y.close()
 			time.sleep(.6)
 			self.respond("That's all for now. See you later!")
+		# Tempfix to make palgrave not crash on win when loading packages
+		if platform.system() == "Windows":
+			return
 		y = os.listdir("{}/InstantPalgrave/pkg".format(os.environ.get("HOME")))
 		for z in y:
 			with open("{}/InstantPalgrave/pkg/{}".format(os.environ.get("HOME"),z)) as commands:
