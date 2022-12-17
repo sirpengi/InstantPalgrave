@@ -1,7 +1,7 @@
 import os
 if not os.path.exists(".setupdone.pconfig"):
 	env = os.environ
-	print("Hi! Welcome to InstantPalgrave!\nLet's get Palgrave up and running.\nDo you want to set Palgrave up manually, or automatically? (m/A) ",end="")
+	print("Hi! Welcome to InstantPalgrave!\nLet's get Palgrave up and running.\nDo you want to set Palgrave up manually, or automatically? Auto-setup doesn't work on windows yet. (m/A) ",end="")
 	x = input()
 	print("\n")
 	if not x.lower() == "m":
@@ -25,7 +25,7 @@ if not os.path.exists(".setupdone.pconfig"):
 		open(".setupdone.pconfig","w").close()
 	else:
 		print("OK! Exiting setup")
-		open("{}/InstantPalgrave/.setupdone.pconfig".format(env["PWD"]),"w").close()
+		open(".setupdone.pconfig","w").close()
 		quit()
 import platform
 import time
@@ -527,9 +527,16 @@ def get_audio_stream():
 		frames_per_buffer = AUDIO_BUFFER,
 	)
 	return stream
-
-
 def main(bot_mode):
+	if sys.argv[1] == "kb":
+		while True:
+			text = input("> ")
+			output = SpeakOutput()
+			cp = configparser.ConfigParser()
+			cp.read("settings.ini")
+			config = cp["palgrave"]
+			robot = PalgraveImplementation(config=config, output=output)
+			robot.callback_receive_text(text)
 	cp = configparser.ConfigParser()
 	cp.read("settings.ini")
 	config = cp["palgrave"]
