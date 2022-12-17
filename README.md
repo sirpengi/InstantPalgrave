@@ -42,7 +42,7 @@ If you are using Spotify:
 * Third: tap Dashboard then Sign In
 * Fourth: create an app, set the redirect_uri to https://kaiete.uk/InstantPalgrave/spotify/done
 * Fifth: put credentials into settings.ini (these will never be shared with anyone else, ever. Never enter your Spotify password here.)
-* Sixth: launch Palgrave and say \`enable music\`
+* Sixth: launch Palgrave and say 'enable music'
 * Palgrave will guide you through the steps.
 
 *Deezer support may be added later.*
