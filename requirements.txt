@@ -3,6 +3,6 @@ vosk
 pyttsx3==2.90
 requests==2.25.1
 sounddevice==0.4.1
-spotipy==2.17.1
+spotipy==2.22.1
 playsound==1.2.2
 dateparser==1.0.0
