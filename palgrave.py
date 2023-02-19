@@ -66,7 +66,7 @@ import os
 import dateparser.search
 
 # Make sure that palgrave command exists but don't
-# install it on Windows (different proceedure)
+# install it on Windows (different procedure)
 if x == "Linux" or x == "Darwin":
 	if not os.path.exists(os.environ.get("HOME") + "/.local/bin/palgrave"):
 		try:
