@@ -69,6 +69,9 @@ If something goes wrong, create an issue [here](https://github.com/kaiete/Instan
 
 # Important!
 Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier (you might be able to run palgrave in an ubuntu20.04 wsl thingy, IDK). If you really want palgrave and you don't want Linux (for some odd reason) here you go https://gitlab.com/kaiete/palgrave-txt
+
+
+
 <script type="text/javascript">
   (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
@@ -82,5 +85,7 @@ Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fe
       v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+Check this box to download!
 
-
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAADL-fQfmZe-lvdx" data-callback="location.href = \"https://github.com/kaiete/instantpalgrave/releases\""></div>
