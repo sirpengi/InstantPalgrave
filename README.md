@@ -85,7 +85,3 @@ Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fe
       v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-Check this box to download!
-
-<div class="cf-turnstile" data-sitekey="0x4AAAAAAADL-fQfmZe-lvdx" data-callback="location.href = \"https://github.com/kaiete/instantpalgrave/releases\""></div>
