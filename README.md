@@ -70,7 +70,7 @@ If something goes wrong, create an issue [here](https://github.com/kaiete/Instan
 # Important!
 Palgrave does not work with Windows yet - why? No idea, but just use Ubuntu / Fedora instead, it's easier (you might be able to run palgrave in an ubuntu20.04 wsl thingy, IDK). If you really want palgrave and you don't want Linux (for some odd reason) here you go https://gitlab.com/kaiete/palgrave-txt
 
-
+<hr>
 
 <script type="text/javascript">
   (function(d, t) {
