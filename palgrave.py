@@ -26,7 +26,7 @@ if not os.path.exists(".setupdone.pconfig"):
 	else:
 		print("OK! Exiting setup")
 		open(".setupdone.pconfig","w").close()
-		quit()
+		rest
 import platform
 import time
 if not os.path.exists(".waconfigdone.pconfig"):
@@ -36,10 +36,7 @@ if not os.path.exists(".waconfigdone.pconfig"):
 	open(".waconfigdone.pconfig","w").close()
 x = platform.system()
 if not x == "Linux" and not x == "Darwin":
-	print("Eeek! Looks like your OS isn't compatible with InstantPalgrave. Try Linux.")
-	confirmUnrecognised = input("Type y to continue anyway.\n> ")
-	if confirmUnrecognised != "y":
-		quit()
+	print("You are using an unrecognised platform. Continue - if you dare...")
 elif x == "Darwin":
 	print("Looks like you're using a Mac, which Palgrave doesn't have support for. Y (capital) to continue anyways.\n")
 	confirmMac = input()
@@ -528,15 +525,6 @@ def get_audio_stream():
 	)
 	return stream
 def main(bot_mode):
-	if sys.argv[1] == "kb":
-		while True:
-			text = input("> ")
-			output = SpeakOutput()
-			cp = configparser.ConfigParser()
-			cp.read("settings.ini")
-			config = cp["palgrave"]
-			robot = PalgraveImplementation(config=config, output=output)
-			robot.callback_receive_text(text)
 	cp = configparser.ConfigParser()
 	cp.read("settings.ini")
 	config = cp["palgrave"]
