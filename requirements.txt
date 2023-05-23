@@ -1,7 +1,7 @@
 PyAudio==0.2.11
 vosk
 pyttsx3==2.90
-requests==2.25.1
+requests==2.31.0
 sounddevice==0.4.1
 spotipy==2.22.1
 playsound==1.2.2
