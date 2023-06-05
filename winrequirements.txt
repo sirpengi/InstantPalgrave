@@ -1,8 +1,0 @@
-PyAudio
-vosk
-pyttsx3
-requests==2.31.0
-sounddevice
-spotipy
-playsound==1.2.2
-dateparser==1.0.0
