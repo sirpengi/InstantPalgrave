@@ -2,3 +2,6 @@ settings.ini
 .pyc
 __pycache__
 .cache-*
+*.pconfig
+palgravenotes
+pkg/*
