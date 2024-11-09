@@ -1,32 +1,5 @@
 import os
-if not os.path.exists(".setupdone.pconfig"):
-	env = os.environ
-	print("Hi! Welcome to InstantPalgrave!\nLet's get Palgrave up and running.\nDo you want to set Palgrave up manually, or automatically? Auto-setup doesn't work on windows yet. (m/A) ",end="")
-	x = input()
-	print("\n")
-	if not x.lower() == "m":
-		print("OK! Installing packages... (stick around - you might need to enter your password)")
-		os.system("sudo apt install portaudio19-dev --quiet")
-		print("#",end="")
-		os.system("pip install -r {}requirements.txt --quiet".format(env["PWD"] + "/"))
-		print("#")
-		print("Done!")
-		print("Where do you live? (This isn't needed, it's only used for weather data. If you don't want to tell us, put in Pennsylvania or something random.)")
-		place = input()
-		with open("settings.ini") as x:
-			y = x.read()
-			y = y.replace("whereILive",place)
-			x.close()
-			print(y)
-			x = open("{}settings.ini".format(env["PWD"] + "/"),"w")
-			x.write(y)
-			x.close()
-		print("OK! Palgrave is all ready.")
-		open(".setupdone.pconfig","w").close()
-	else:
-		print("OK! Exiting setup")
-		open(".setupdone.pconfig","w").close()
-		rest
+print("Welcome to Palgrave!")
 import platform
 import time
 if not os.path.exists(".waconfigdone.pconfig"):
@@ -62,25 +35,7 @@ import vosk
 import os
 import dateparser.search
 
-# Make sure that palgrave command exists but don't
-# install it on Windows (different procedure)
-if x == "Linux" or x == "Darwin":
-	if not os.path.exists(os.environ.get("HOME") + "/.local/bin/palgrave"):
-		try:
-			print("\033[31m" + "Hmmm, looks like you haven't got the palgrave command. It's being installed for your convenience." + "\033[0m")
-			x = open(os.environ.get("HOME") + "/.local/bin/palgrave","w")
-			print("hi",end="")
-			x.write("#!/bin/bash\npython3 " + os.environ.get("HOME") + "/InstantPalgrave/palgrave.py $1\n")
-			print("#",end="")
-			x.close()
-			print("#",end="")
-			time.sleep(.6)
-			os.system("chmod +x $HOME/.local/share/palgrave")
-			print("#]")
-		except:
-			print('An error occurred, so the palgrave command wasn\'t installed')
-		else:
-			print("Done!\nYou can now just type `palgrave` into your terminal to launch palgrave!")
+
 MODEL = "vosk-model-small-en-us-0.15"
 AUDIO_BITRATE = 44100
 AUDIO_BUFFER = 1024
